@@ -41,8 +41,7 @@
             /* Ensure form is above the background */
         }
 
-        .left-side,
-        .right-side {
+        .container {
             background-color: black;
             /* Set black background for panels */
             border: 1px solid #00ff00;
@@ -112,6 +111,39 @@
             /* Ensure it takes full width */
             max-width: calc(100% - 20px);
             /* Adjust for padding */
+            z-index: 1;
+            /* Ensure ASCII art is above the background */
+        }
+
+        /* Customize scrollbar width */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+            /* Width & height of the scrollbar */
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #2e2e2e;
+            /* Background of the scrollbar track */
+        }
+
+        /* Thumb (scroll handle) */
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            /* Color of the scroll handle */
+        }
+
+        /* Hover effect */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008000;
+            /* Darker green on hover */
+        }
+
+        /* Active (when clicked) */
+        ::-webkit-scrollbar-thumb:active {
+            background: #004d00;
+            /* Darker green when clicked */
         }
 
         /* Custom Radio Button Styles */
@@ -205,7 +237,7 @@
 
     <h1>Go Server for Generating Ascii Art Text</h1>
     <form action="/" method="post">
-        <div class="left-side">
+        <div class="container">
             <label for="text">Input text to convert to ascii art:
                 <br>
                 Only ascii characters will be processed.</label>
@@ -214,7 +246,7 @@
                 required>{{.Text}}</textarea>
             <br>
         </div>
-        <div class="right-side">
+        <div class="container">
             <label>Choose a style:</label>
             <div class="radio-group">
                 <label>
