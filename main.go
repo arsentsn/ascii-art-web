@@ -82,8 +82,10 @@ func handler404(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", mainPage)
-
 	http.HandleFunc("/404", handler404)
+
+	// Serve static files from the "static" folder
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
 	// Start the server
 	fmt.Println("Server is running at http://localhost:8080")
