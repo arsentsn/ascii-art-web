@@ -148,11 +148,13 @@
         }
 
         /*MOZZILA SETTINGS */
-        body {
-            scrollbar-width: thin;
-            /* Options: auto, thin, none */
-            scrollbar-color: #00ff00 #00ff00;
-            /* Thumb color and track color */
+        @-moz-document url-prefix() {
+            body {
+                scrollbar-width: thin;
+                /* Options: auto, thin, none */
+                scrollbar-color: #00ff00 #00ff00;
+                /* Thumb color and track color */
+            }
         }
 
         /* SCROLLBAR STYLING END */
