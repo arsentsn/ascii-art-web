@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascii Art Web</title>
+    <style>
+        body {
+            background-image: url('/static/matrix.jpg');
+            /* background-color: black; */
+            /* Dark background */
+            color: #00ff00;
+            /* Neon green text */
+            font-family: 'Courier New', Courier, monospace;
+            /* Monospace font for a hacker vibe */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        h1,
+        h2 {
+            text-shadow: 0 0 10px #00ff00;
+            /* Glowing effect */
+            position: relative;
+            z-index: 1;
+            /* Ensure text is above the background */
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+            max-width: 600px;
+            /* Limit form width */
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            /* Ensure form is above the background */
+        }
+
+        .container {
+            background-color: black;
+            /* Set black background for panels */
+            border: 1px solid #00ff00;
+            /* Neon border */
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            position: relative;
+            z-index: 1;
+            /* Ensure containers are above the background */
+        }
+
+        textarea {
+            background-color: black;
+            /* Dark textarea */
+            color: #00ff00;
+            /* Neon green text */
+            border: 1px solid #00ff00;
+            /* Neon border */
+            border-radius: 5px;
+            padding: 5px;
+            width: calc(100% - 12px);
+            /* Adjust width */
+        }
+
+        .button {
+            background-color: black;
+            /* Black background to match the theme */
+            color: #00ff00;
+            /* Neon green text */
+            border: 1px solid #00ff00;
+            /* Neon border */
+            padding: 8px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            /* Match font to the rest of the page */
+            margin-left: 10px;
+            /* Align button slightly to the right */
+        }
+
+        .button:hover {
+            background-color: #00ff00;
+            /* Neon green on hover */
+            color: black;
+            /* Black text on hover */
+            border-color: #00cc00;
+            /* Darker green border on hover */
+        }
+
+        pre {
+            background-color: black;
+            /* Dark background for ASCII art */
+            color: #00ff00;
+            /* Neon green text */
+            padding: 10px;
+            border: 1px solid #00ff00;
+            /* Neon border */
+            border-radius: 5px;
+            overflow-x: auto;
+            /* Horizontal scroll if needed */
+            white-space: pre;
+            /* Preserve whitespace */
+            width: 100%;
+            /* Ensure it takes full width */
+            max-width: calc(100% - 20px);
+            /* Adjust for padding */
+            z-index: 1;
+            /* Ensure ASCII art is above the background */
+        }
+
+        /* SCROLLBAR STLING */
+        /* Customize scrollbar width */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+            /* Width & height of the scrollbar */
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #2e2e2e;
+            /* Background of the scrollbar track */
+        }
+
+        /* Thumb (scroll handle) */
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            /* Color of the scroll handle */
+        }
+
+        /* Hover effect */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #008000;
+            /* Darker green on hover */
+        }
+
+        /* Active (when clicked) */
+        ::-webkit-scrollbar-thumb:active {
+            background: #004d00;
+            /* Darker green when clicked */
+        }
+
+        /*MOZZILA SETTINGS */
+        @-moz-document url-prefix() {
+            body {
+                scrollbar-width: thin;
+                /* Options: auto, thin, none */
+                scrollbar-color: #00ff00 #00ff00;
+                /* Thumb color and track color */
+            }
+        }
+
+        /* SCROLLBAR STYLING END */
+
+        /* Custom Radio Button Styles */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .radio-group label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            margin: 5px 0;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        .radio-group input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            /* Hide the default radio button */
+        }
+
+        .radio-indicator {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 16px;
+            /* Smaller circle */
+            width: 16px;
+            /* Smaller circle */
+            border: 2px solid #00ff00;
+            /* Neon border */
+            border-radius: 50%;
+            /* Circle shape */
+            background-color: black;
+            /* Dark background */
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .radio-group input[type="radio"]:checked+.radio-indicator {
+            background-color: #00ff00;
+            /* Neon green when checked */
+            box-shadow: 0 0 10px #00ff00;
+            /* Glowing effect */
+        }
+
+        /* Cluttered Hacker Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            /* Prevent interaction with background */
+            z-index: 0;
+            /* Send background behind everything */
+        }
+
+        .falling-text {
+            position: absolute;
+            white-space: nowrap;
+            color: #00ff00;
+            /* Neon green text */
+            font-size: 16px;
+            /* Adjust font size as needed */
+            opacity: 0.7;
+            animation: fall linear infinite;
+            /* Animate falling text */
+        }
+
+        /* Keyframes for falling animation */
+        @keyframes fall {
+            0% {
+                transform: translateY(-150%);
+                /* Start above the visible area */
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <h1>Go Server for Generating Ascii Art Text</h1>
+    <form action="/" method="post">
+        <div class="container">
+            <label for="text">Input text to convert to ascii art:
+                <br>
+                Only ascii characters will be processed.</label>
+            <br>
+            <textarea id="text" name="text" rows="4" cols="50" placeholder="Your text here."
+                required>{{.Text}}</textarea>
+            <br>
+        </div>
+        <div class="container">
+            <label>Choose a style:</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" id="banner1" name="banner" value="standard" checked {{ if eq .Banner "standard"
+                        }}checked{{ end }}>
+                    <span class="radio-indicator"></span>
+                    Standard
+                </label>
+                <label>
+                    <input type="radio" id="banner2" name="banner" value="shadow" {{ if eq .Banner "shadow" }}checked{{
+                        end }}>
+                    <span class="radio-indicator"></span>
+                    Shadow
+                </label>
+                <label>
+                    <input type="radio" id="banner3" name="banner" value="thinkertoy" {{ if eq .Banner "thinkertoy"
+                        }}checked{{ end }}>
+                    <span class="radio-indicator"></span>
+                    Thinkertoy
+                </label>
+                <!-- uncomment the following radio buttons to test error handling-->
+                <!-- <label>
+                    <input type="radio" id="banner4" name="banner" value="invalid" {{ if eq .Banner "invalid"
+                        }}checked{{ end }}>
+                    <span class="radio-indicator"></span>
+                    Invalid
+                </label>
+                <label>
+                    <input type="radio" id="banner5" name="banner" value="" {{ if eq .Banner ""
+                        }}checked{{ end }}>
+                    <span class="radio-indicator"></span>
+                    Empty
+                </label> -->
+            </div>
+        </div>
+        <input type="submit" class="button" value="Submit">
+    </form>
+
+    {{if .AsciiArt}}
+    <h2>Generated ASCII Art:</h2>
+    <pre>{{.AsciiArt}}</pre>
+    <form action="/" method="post">
+        <input type="hidden" name="ascii_art" value="{{.AsciiArt}}">
+        <input type="hidden" name="download" value="true">
+        <input type="submit" class="button" value="Download ASCII Art">
+    </form>
+    {{end}}
+
+    <script>
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+        const numberOfFallingTexts = 200; // Increased density for extra clutter
+        const background = document.querySelector('.background');
+
+        function createFallingText() {
+            const fallingText = document.createElement('div');
+            fallingText.classList.add('falling-text');
+            fallingText.innerText = characters[Math.floor(Math.random() * characters.length)];
+            fallingText.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+            fallingText.style.animationDuration = (Math.random() * 5 + 3) + 's'; // Random falling speed
+            fallingText.style.fontSize = (Math.random() * 10 + 8) + 'px'; // Random font size (smaller sizes)
+            fallingText.style.opacity = Math.random(); // Random opacity for more variation
+            fallingText.style.top = Math.random() * -100 + 'px'; // Start above the visible area
+            background.appendChild(fallingText);
+
+            // Remove after animation to prevent memory overflow
+            fallingText.addEventListener('animationend', () => {
+                fallingText.remove();
+            });
+        }
+
+        // Generate new falling texts at intervals
+        for (let i = 0; i < numberOfFallingTexts; i++) {
+            createFallingText();
+        }
+
+        // Create falling texts at intervals
+        setInterval(() => {
+            createFallingText();
+        }, 500); // Increased frequency for denser effect
+    </script>
+</body>
+
+</html>
