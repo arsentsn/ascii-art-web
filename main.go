@@ -50,7 +50,7 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		//handle download button
+		//handle file export
 		if r.FormValue("download") == "true" {
 			// User requested a download
 			content := []byte(r.FormValue("ascii_art"))
@@ -69,6 +69,7 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		// handle ascii art generation
 		vars.Text = r.FormValue("text")
 		vars.Banner = r.FormValue("banner")
 
