@@ -50,8 +50,8 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		//handle file export
-		if r.FormValue("download") == "true" {
+		// handle file export
+		if r.FormValue("download") == "Download ASCII Art" {
 			// User requested a download
 			content := []byte(r.FormValue("ascii_art"))
 			log.Println(vars.AsciiArt)
@@ -79,7 +79,7 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		//Comment this out to test internal server error handling
+		// Comment this out to test internal server error handling
 		// Validate banner
 		if vars.Banner != "standard" && vars.Banner != "shadow" && vars.Banner != "thinkertoy" {
 			http.Error(w, "Bad Request 400: Invalid 'banner' value", http.StatusBadRequest)
