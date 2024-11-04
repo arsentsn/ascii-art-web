@@ -67,6 +67,12 @@
             /* Adjust width */
         }
 
+        .center-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .button {
             background-color: black;
             /* Black background to match the theme */
@@ -74,7 +80,7 @@
             /* Neon green text */
             border: 1px solid #00ff00;
             /* Neon border */
-            padding: 8px 18px;
+            padding: 8px 30px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s, border-color 0.3s;
@@ -295,7 +301,9 @@
                 </label> -->
             </div>
         </div>
-        <input type="submit" class="button" value="Submit">
+        <div class="center-button">
+            <input type="submit" class="button" value="Submit">
+        </div>
     </form>
 
     {{if .AsciiArt}}
@@ -303,12 +311,14 @@
     <pre>{{.AsciiArt}}</pre>
     <form action="/" method="post">
         <input type="hidden" name="ascii_art" value="{{.AsciiArt}}">
-        <input type="submit" name="download" class="button" value="Download ASCII Art">
+        <div class="center-button">
+            <input type="submit" name="download" class="button" value="Download ASCII Art">
+        </div>
     </form>
     {{end}}
 
     <script>
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+        const characters = "日本語のキボド0123456789";
         const numberOfFallingTexts = 200; // Increased density for extra clutter
         const background = document.querySelector('.background');
 
