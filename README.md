@@ -1,5 +1,7 @@
 # Ascii Art Web
 
+[INSTRUCTIONS](https://github.com/01-edu/public/tree/master/subjects/ascii-art-web)
+
 ## Description
 This project is a simple web application that generates ASCII art based on user input. Users can enter text and select a banner style, and the application will render the corresponding ASCII art.
 
@@ -8,9 +10,9 @@ In this version a Download button is added, which allows the users to download t
 The servers runs at localhost:8080
 
 ## Authors
-- George Choremis
-- Arsen Tsntsgoukian
-- Katerina Vamvasaki
+- [arsentsn](https://github.com/arsentsn)
+- [vamkat](https://github.com/vamkat)
+- gchoremi
 
 ## Implementation Details
 
